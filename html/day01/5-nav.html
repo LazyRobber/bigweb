@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航</title>
+    <style>
+        /* 重置 */
+        body{
+
+        }
+        body,ul,ol,dl,p,h1,h2,h3{
+            margin: 0;
+            padding: 0;
+        }
+        ul,ol{
+            list-style: none;
+        }
+        a{
+            color: black;
+            text-decoration: none;
+        }
+        /* 样式添加 */
+        .nav{
+            border-bottom: 1px solid #ededed;
+            box-shadow: 0 1px 5px #ededed;
+        }
+        .nav .wrapper{
+            width: 1024px;
+            margin: 0 auto;
+        }
+        .nav .top_nav::after{
+            content: "";
+            display: block;
+            clear: both;
+        }
+        .nav .top_nav li{
+            float: left;
+            width: 100px;
+            text-align: center;
+            line-height: 3em;
+            height: 3em;
+        }
+        .nav .top_nar li:hover{
+            border-bottom: 2px solid bisque;
+        }
+        .nav .top_nav li:hover a{
+            color:bisque;
+        }
+
+    </style>
+</head>
+<body>
+    <!--1. 搭建网页结构【html】良构【身材】  -->
+    <!--2. 优化网页样式【css3】【化妆】 -->
+    <!--3. 网页动态化【js】数据通信 ajax -->
+
+    <div class="nav">
+        <div class="wrapper">
+            <ul>
+                <li><a href="">首页</a></li>
+                <li><a href="">居家生活</a></li>
+                <li><a href="">电子产品</a></li>
+                <li><a href="">户外活动</a></li>
+                <li><a href="">运动旅行</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
