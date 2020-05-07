@@ -1,0 +1,427 @@
+今天
+	高级面向对象
+明天
+	DOM
+后天
+	BOM
+
+复习
+	1、正则表达式的数量词
+		var pattern = /abc{3,5}/img;
+
+		exp{3}		将前面的表达式匹配3次	
+		exp{3,}		将前面的表达式匹配3+次
+		exp{3,5}	将前面的表达式匹配3~5次
+
+		exp*		将前面的表达式匹配0次或多次
+		exp+		将前面的表达式匹配1次或多次
+
+		贪婪匹配		-->  尽可能多的匹配
+			var str = 'abc123456789'
+			var pattern = /\d{3,}/img;
+
+		非贪婪匹配	-->  尽可能少的匹配
+			var str = 'abc123456789'
+			var pattern = /\d{3,}?/img;
+
+	2、判断邮箱格式
+
+	3、包装器类型
+		Number() String() Boolean()
+
+		String()
+
+		问题：'hello' --> ['h','e','l','l','o']
+			1. for循环
+			2. split()
+
+		var str = 'hello';
+
+		String.prototype.xxx
+			length	
+				字符串长度
+			charAt(index)
+				获取指定位置上的字符
+			charCodeAt(index)
+				获取指定位置上的字符编码
+			indexOf(val)
+				获取指定字符在字符串中首次出现的位置，如果该字符不属于字符串，返回-1
+
+				拓展：数组去重 --> indexOf()
+					获取指定元素在数组中首次出现的索引
+					while(arr.indexOf(arr[i] != i)){
+						arr.splice(i,1);
+						//索引回退
+						i--;
+					}
+
+			concat()
+				连接两个字符串
+			slice(begin,end)
+				截取字符串，包含起始位置，不包含结束位置
+			trim()
+				删除字符串两边的空格，中间的空格无法删除
+				var str = ' hello wrold ';
+				console.log(str.trim()); // 'hello world'
+			toUpperCase()
+				转换为大写
+			toLowerCase()
+				转换为小写
+			match(regexp)
+				查找匹配内容，将匹配内容返回成一个数组
+			split()
+				将字符串分割成字符串数组
+				使用''
+				不使用''
+
+	4、Math()对象
+		Math.ceil()		向上舍入
+		Math.floor()	向下舍入
+		Math.round()	四舍五入
+		Math.random()	生成随机数，0-1之间的小数
+
+	5、Date日期对象
+		1.实例化日期对象
+			var date = new Date();
+			世界标准时间		
+
+		2.Date对象的方法	
+			getDate()
+				一个月中的某一天(0-31)
+			getFullYear()
+				年(四位数字)
+			getMonth()
+				月
+			getDay()
+				星期中的某一天
+			getHours()
+				时
+			getMinutes()
+				分
+			getSeconds()
+				秒
+			getTime()
+				时间戳
+
+		3.标准时间转换为正常时间格式
+			方法一：原生js
+				补全位数
+					padStart(2,'0')
+			方法二：使用第三方库(moment)
+				var date = new Date();
+				var result = moment(date).format('YYYY-MM-DD hh:mm:ss');
+
+学习
+	1、高级面向对象
+		目的：利用一种机制帮我们创建具有特殊功能的对象
+
+		之前创建对象的方式
+			var obj = {
+				name:'xpf',
+				age:25,
+				gender:'male'
+			}
+		再去创建obj2，并且obj2中的属性名与obj一样
+			var obj2 = {
+				name:'xpf',
+				age:25,
+				gender:'male'
+			}
+		再去创建obj3、obj4...
+
+		问题：
+			创建多个相似对象的时候会产生很多冗余的代码
+
+		为了解决这样的问题，人们开始思考，能不能批量的创建对象？
+
+	1) 封装/创建对象的过程 【api的本质】
+		1. 工厂函数模式
+			提供了一个函数，每调用一次该函数，返回一个对象
+				function factory(name,age,gender){
+				    var obj = {
+				        name:name,
+				        age:age,
+				        gender:gender,
+				        sayMessage:function(){
+				            console.log(this.name,this.age,this.gender)
+				        }
+				    }
+				    return obj;
+				}
+
+				var obj1 = factory('xpf',25,'male');
+				var obj2 = factory('zhangsan',30,'male');
+
+				console.log('obj1',obj1);//obj1 { name: 'xpf',age: 25,gender: 'male',sayMessage: [Function: sayMessage] }
+				console.log('obj2',obj2);//obj2 { name: 'zhangsan',age: 30,gender: 'male',sayMessage: [Function: sayMessage] }
+
+				obj1.sayMessage(); // xpf 25 male
+				obj2.sayMessage(); // zhangsan 30 male
+
+				需求：上面的代码创建的两个对象都是'人'，现在希望创建两个对象，一个是'人'，另一个是'狗'
+					function factory(name,age,gender){
+					    return {
+					        name:name,
+					        age:age,
+					        gender:gender,
+					        sayMessage:function(){
+					            console.log(this.name,this.age,this.gender)
+					        }
+					    }
+					}
+
+					var obj1 = factory('xpf',25,'male');
+					var obj2 = factory('小黑',3,'雄性');
+
+					console.log('obj1',obj1);
+					console.log('obj2',obj2);
+
+					console.log(typeof(obj1)); // object
+					console.log(typeof(obj2)); // object
+
+				解决：
+					创建多个相似对象时，代买冗余的问题
+				问题：
+					1、类型无法细分(由于使用了return {}，所以创建出来的所有obj实例都是Object类型)
+					2、函数会重复的创建/破坏了封装性
+						创建多个对象的时候，需要多次的调用factory函数，即每调用一次该函数，都会内存中开辟一块属于sayMessage的空间
+
+		2. 构造函数模式(手机)
+			系统内置构造函数(自带的app)
+				Object、Array、Date、Math、Number、String、RegExp
+				new Object()
+				new Array()
+
+			自定义构造函数(下载的app)
+				1) js中可以自定义构造函数，从而自定义对象的属性与方法
+				2) 构造函数的首字母大写
+
+				function Person(){}
+
+				//人的构造函数
+				function Person(name,age,gender){
+				    this.name = name;
+				    this.age = age;
+				    this.gender = gender;
+				    this.words = function(){
+				        console.log('咕咕咕');
+				    }
+				}
+				//per1叫做实例
+				var per1 = new Person('xpf',25,'male');
+				var per2 = new Person('zhangsan',25,'male');
+				console.log('per1',per1);
+				per1.words(); // 咕咕咕
+				per2.words(); // 咕咕咕
+
+				//狗的构造函数
+				function Dog(name,age,gender){
+				    this.name = name;
+				    this.age = age;
+				    this.gender = gender;
+				}
+				var dog1 = new Dog('小黑',3,'雄性');
+				console.log('dog1',dog1);
+
+				--->
+
+				function Dog(name,age,gender){
+					var obj = {}
+				    obj.name = name;
+				    obj.age = age;
+				    obj.gender = gender;
+				}
+
+			现象：
+				1、构造函数的首字母大写 --> 规范
+				2、没有显式的创建对象
+				3、将属性和方法赋值给了this对象
+				4、没有return语句
+
+			本质：使用new关键字调用构造函数创建对象，实际上执行了如下步骤
+				隐式
+				1、创建一个对象
+				2、将构造函数的作用域赋值给了这个对象(this指向该对象)
+				3、执行构造函数中的代码(新增属性和方法)
+				4、返回一个对象
+
+			区别：构造函数与普通函数的区别
+				1、构造函数也是一个普通函数，创建方式与普通函数一样(函数声明)，但是构造函数的首字母大写
+					function Person(){}
+					function people(){}
+				2、调用方式不一样
+					普通函数的调用方式：直接调用 people()
+					构造函数的调用方式：使用new关键字调用 new Person()
+				3、返回值不一样
+					普通函数：因为没有返回值，结果为undefined
+						function people(){
+
+						}
+						var peo = people();
+						console.log(peo); // undefined
+					构造函数：会立马创建一个对象，所以说返回值为空对象
+						function Person(){
+
+						}
+						var per = new Person();
+						console.log(per); // Person {}
+			解决：	
+				解决了类型无法细分的问题
+			问题：
+				函数会重复的创建/破坏了封装性
+				每个words方法都要在每个实例上重新创建一次，也就是说每次调用构造函数的时候，都会创建一个对象，而对象中又会每次的去创建一个words方法(函数)
+
+		3. 构造函数与原型结合的模式(真正解决方案)
+			属性保存在实例中，方法保存在构造函数的原型中
+			function Person(name,age,gender){
+			    this.name = name;
+			    this.age = age;
+			    this.gender = gender;
+			}
+			Person.prototype.words = function(){
+			    console.log('哈哈哈');
+			}
+
+			var per1 = new Person('xpf',25,'male');
+			var per2 = new Person('zhangsan',30,'male');
+			console.log('per1',per1);
+			console.log('per2',per2);
+			per1.words();
+			per2.words();
+			console.log(per1.words === per2.words); // true
+
+			per1和per2都可以调用构造函数原型中方法words
+
+	2) 继承
+		当我们创建一个构造函数的时候，构造函数会获得一个prototype属性，该属性是一个指针，它会指向一原型对象，原型对象中也包含一个属性constructor，该属性也是一个指针，指向构造函数，当我们使用该构造函数创建实例的时候，该实例也会获得一个属性[[Prototype]]，该属性会指向原型对象
+		function Person(){}
+
+		1. 原型链继承 (子构造函数的原型指向父构造函数的实例)
+			原理：让一个引用类型继承另一个引用类型的属性和方法
+			核心代码：
+				Person2.prototype = new Person1();
+				Person2.prototype.constructor = Person2;
+			
+			function Person1(name,age,gender){
+			    this.name = name;
+			    this.age = age;
+			    this.gender = gender;
+			}
+			Person1.prototype.money = function(){
+			    console.log('哈哈哈，我很有钱！');
+			}
+			var per1 = new Person1('zhangsan',12,'male');
+			var per2 = new Person1('lisi',10,'female');
+			console.log(per1);
+			console.log(per2);
+			per1.money();
+			per2.money();
+
+			Person2.prototype = new Person1();
+			Person2.prototype.constructor = Person2;
+
+			function Person2(name,age,gender){
+			    this.name = name;
+			    this.age = age;
+			    this.gender = gender;
+			}
+
+			var per3 = new Person2('xiaohong',10,'female');
+			var per4 = new Person2('xiaoming',8,'male');
+			console.log('per3',per3);
+			console.log('per4',per4);
+			per3.money();
+
+		2. 借用构造函数(不仅方法可以继承，属性也可以继承)	
+			核心代码：
+				Person1.call(this,name,age,gender)
+
+			function Person1(name,age,gender){
+			    this.name = name;
+			    this.age = age;
+			    this.gender = gender;
+			}
+			Person1.prototype.money = function(){
+			    console.log('哈哈哈，我很有钱！');
+			}
+			var per1 = new Person1('zhangsan',12,'male');
+			var per2 = new Person1('lisi',10,'female');
+			console.log(per1);
+			console.log(per2);
+			per1.money();
+			per2.money();
+
+			Person2.prototype = new Person1();
+			Person2.prototype.constructor = Person2;
+
+			function Person2(name,age,gender){
+				//借用构造函数
+			    Person1.call(this,name,age,gender);
+			}
+
+			var per3 = new Person2('xiaohong',10,'female');
+			var per4 = new Person2('xiaoming',8,'male');
+			console.log('per3',per3);
+			console.log('per4',per4);
+			per3.money();
+
+		es5正式完结
+			ECMAScript5
+			DOM
+			BOM 2两天
+
+	2、DOM(文档对象模型)
+		1.作用
+			js操作html
+			选中浏览器页面任意元素
+				var dom = document.getElementById('#app')
+				var dom = document.getElementsByTagName('test')
+			绑定事件
+				dom.onclick = function(){}
+			监听	
+				dom.addEventListener(function(){})
+
+		2.DOM构造函数树
+			<div>hello</div>
+
+			Node(节点)
+				文档节点	Document类型 
+				元素节点	Element类型 		<div></div>
+				文本节点	Text类型			hello
+				注释节点	Comment类型		<!--注释-->
+
+		3.实例化(如何创建一个对象)
+			var dom = document.getElementById('one');
+
+		4.API(火狐mdn)
+			1) Document
+				表示整个html文档，一般情况下一个html可以使用一个Document的实例来表示，即document
+
+				属性
+					title
+					head
+					body
+				方法
+					getElementById()
+					getElementsByClassName()
+					getElementsByName()
+					getElementsByTagName()
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

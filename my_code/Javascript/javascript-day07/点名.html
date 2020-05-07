@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>点名</title>
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+	<link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<!-- 
+思路：
+	1、设置定时器
+	2、生成随机数，充当数组的下标
+	3、将此次随机生成的数组的值放入div中
+	4、点击按钮清除定时器 
+-->
+<script>
+	$(function(){
+		// 获取屏幕高度
+		$('.content').height($(window).height());
+		var arr = ['梁旭阳','高晨','许丽娜','杨晓梅','张广美','李娣韵','黄倩聆','曾宇翀','朱家辰','袁帅','甘雷','张云思','周珍','徐宇航','庄政','韦海全','李丽欢','韦芯琪','韦思伊','刘婕','秦雅婷','吴欣欣','候靖如','史正鑫','卫晓婷','赵姝韵','郭媛','王杰','褚玲玲','滕萃萃','白江江','李文艳','杨雳渊','马乾博','孙凡淑','张志玲','李珂慧','李艳芬','张娜娜','苏传晶','邓婷婷','戴巧燕','李晓鹏','孙珊','薛凌强','	梁佳','聂倩','王晶','郭士绮','赵超','秦雪峰','武子越','邓文伟','蒋俊','肖淼','兰州王杰','刘骏翔','王彬林','张田伟','王潞驰','袁赛男','刘鹏','常文涛','郝洪辉','郑文硕','李贤文','何熙','彭冬宝','万伟亮'];
+		console.log(arr,'---');
+		var choice = setInterval(function info(){
+			// 生成随机数0-68
+			var index = Math.round(Math.random()*(arr.length-1));
+			// console.log(arr[index]);
+
+			// 将值放入id为name的div中
+			$('#name').text(arr[index]);
+			// console.log($('#name').text());	
+		},10);
+
+		// 清除定时器
+		$('button').click(function(){
+			clearInterval(choice);
+		})
+	})
+
+</script>
+<body>
+	<div class="content">
+		<div class="wrap">
+			<div id="name"></div>
+			<button class="btn btn-warning">暂停</button>
+		</div>
+	</div>
+</body>
+<style>
+	/*将父元素设置成伸缩盒，子元素就可以水平垂直居中*/
+	.content{
+		background-color: black;
+		opacity: 0.7;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+	}
+	#name{
+		height: 100px;
+		width: 300px;
+		background-color: #ccc;
+		font-size: 40px;
+		border-radius: 10px;
+		line-height: 100px;
+		text-align: center;
+	}
+	.wrap{
+		position: relative;
+	}
+	.btn{
+		position: absolute;
+		top: 130%;
+		left: 40%; 
+	}
+	/*取消默认边距*/
+	*{
+		margin:0;
+		padding:0;
+	}
+
+</style>
+</html>

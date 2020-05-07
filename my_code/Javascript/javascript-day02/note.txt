@@ -1,0 +1,454 @@
+复习
+	1、JavaScript介绍
+		为什么要学？
+		前端课程体系
+		优点
+
+	2、JavaScript的组成
+		ECMAScript5(es5)	=>	es6
+			变量
+			注释
+			数组
+			对象
+			函数
+		DOM(文档对象模型)
+			js对html做一些操作
+				获取dom节点
+				绑定事件
+				监听
+		BOM(浏览器对象模型)
+			js对浏览器进行操作
+				定时器setTimeout(function(){})/setInterval(function(){})
+				alert('')
+	3、js解析器
+		主流浏览器
+		nodejs -> js可以运行在服务器上
+
+		js运行在浏览器上：动画、表单验证...
+		js运行在服务器上：操作数据库、代码编译...
+
+	4、下载nodejs
+		如何建立软连接(快捷方式)？
+		如何退出nodejs命令行？
+
+	5、vim三种模式(spf13)
+		命令行模式
+			复制		yy
+			粘贴		p
+			删除		dd
+			撤回		u
+		编辑模式(输入i、o)
+			代码的编写
+		底行模式(shift + :)
+			保存并退出	wq
+			退出			q
+			强制退出		q!
+	6、变量
+		弱类型(数据类型可以随时的变换)
+		变量声明
+			var a;
+		变量初始化
+			a = 2;
+			a = 'hello';
+		变量使用
+			a++;
+			++a;
+		变量声明与初始化同时进行
+			var a = 2;
+		变量的数据类型
+			基本数据类型
+				数字类型 number
+				字符串类型	string
+				布尔类型		boolean
+				null	空对象
+				undefined	未定义
+
+				typeof()判断基本数据类型
+				isNaN()判断变量是否是数字
+			引用数据类型
+				对象
+				函数
+				数组
+				正则表达式
+	7、操作符
+		算术运算符
+			+
+			-
+			*
+			/
+			%
+		赋值运算符
+			=
+		一元运算符
+			++	自增
+				前置
+					++a;	先自增，再使用
+				后置
+					a++;	先使用，再自增
+			--	自减
+			+、-	将其他数据类型转换为数字类型
+		逻辑运算符
+			&&	并且
+				两个表达式有一个为false，都返回false
+			||	或
+				两个表达式有一个为true，都返回true
+			!	非
+				取反
+				！fasle  // true
+		比较运算符
+			==
+			!=
+				比较值
+			===
+			!==
+				比较数据类型
+		三目运算符
+			exp1 ? exp2 : exp3
+		拼接运算符
+			+
+			图片地址的拼接
+			视频播放地址的拼接
+			根据id查询XXX
+
+学习
+	1、基本数据类型之间的转换
+		1) 其他数据类型转换为数字类型
+			+、-
+			Number()
+
+			1.字符串转数字类型
+				var str = '123';
+				//方法一
+				var num1 = +str;
+				//方法二
+				var num2 = Number(str);
+
+				console.log('str',typeof(str));	//string
+				console.log('num1',typeof(num1)); //number
+				console.log('num2',typeof(num2)); //number
+
+				---
+
+				var str = 'hello world';
+				var num = Number(str);
+				console.log(num);	// NaN
+				console.log(typeof(num));	// number
+			2.布尔类型转数字类型
+				var a = true;
+				var b = false;
+
+				var num1 = Number(a);
+				var num2 = Number(b);
+
+				console.log('num1',num1);	//1
+				console.log('num2',num2);	//0
+			3.null、undefined转数字类型
+				var a = null;
+				var num = +a;
+				console.log(num); //0
+
+				---
+
+				var a = undefined;
+				var num = +a;
+				console.log(num); //NaN
+			4.parseInt/parseFloat
+				var a = 1.123;
+
+				var num1 = parseInt(a);
+				var num2 = parseFloat(a);
+
+				console.log('num1',num1); //1
+				console.log('num2',num2); //1.123
+
+		2) 其他数据类型转换为字符串类型
+			'' 或 ""
+			String()
+			toString()	null、undefined不可以调用
+
+			var a = 1;
+
+			var str1 = 'a';
+			var str2 = String(a);
+			var str3 = a.toString();
+
+			console.log('str1',typeof(str1)); //string
+			console.log('str2',typeof(str2)); //string
+			console.log('str3',typeof(str3)); //string
+
+		3) 其他数据类型转换为布尔类型
+			!!
+			Boolean()
+			1.数字类型转布尔类型
+				var a = 1;
+				var b = 0;
+
+				var bn1 = !!a;
+				var bn2 = Boolean(a);
+				var bn3 = !!b;
+
+				console.log('bn1',bn1);	//true
+				console.log('bn2',bn2); //true
+				console.log('bn3',bn3); //fasle
+			2.字符串类型转布尔类型
+				var str1 = 'hello';
+				var str2 = '';
+
+				var bn1 = !!str1;
+				var bn2 = !!str2;
+
+				console.log('bn1',bn1);	//true
+				console.log('bn2',bn2); //false
+			3.null、undefined转布尔类型
+				返回值都为false
+
+	2、流程控制语句
+		1) 分支语句(做了不同的选择，会有不同的后果，满足不同的条件，会执行不同的代码)
+			if(){}
+
+			if(){} else {}
+
+			if(){} else if(){} else {}
+
+			switch-case
+
+			var password = 123321;
+			if(password == '123321'){
+				console.log('密码正确')
+			}
+
+			var age = 18;
+			if(age >= 18){
+				console.log('成年人')
+			} else {
+				console.log('未成年')
+			}
+
+			==>
+
+			三目运算符
+			age >= 18 ? '成年人' : '未成年'
+
+
+			var name = '坚果云'
+
+			if(name == '蓝奏云'){
+				console.log('下载速度为11.42MB/s')
+			} else if (name == '坚果云'){
+				console.log('下载速度为7.34MB/s')
+			} else if (name == '天翼云盘'){
+				console.log('下载速度为3.02MB/s')
+			} else {
+				console.log('下载速度为3.02kb/s')
+			}
+
+			---
+			var name = '百度网盘';
+
+			switch(name){
+			    case '蓝奏云':
+			        console.log('下载速度为11.42MB/s');
+			        break;
+			    case '坚果云':
+			        console.log('下载速度为7.34MB/s');
+			        break;
+			    default:
+			        console.log('您使用的是百度网盘')
+			}
+			注意：
+				1、在switch与case之间，不能加其他代码
+				2、每一次判断条件结束的时候，都要加break，以跳出switch判断
+					如果没有加break，代码会一直往下继续执行，直到遇到下一个break或者是default，才跳出switch判断
+
+		2) 循环语句
+			循环的三要素：初始化条件、结束判定条件、迭代
+			for(){}
+			while
+			do-while
+
+			1.for循环
+				for(初始化条件;结束判定条件;迭代){
+					//循环体
+				}
+
+				如何实现1-100累加的和？
+					初始化条件		var i=1
+					结束判定条件		i <= 100
+					迭代				i++
+
+					var result = 0;
+					for(var i=1;i<=100;i++){
+					   result = result + i;
+					   //result += i;
+					}
+					console.log(result);	//5050
+
+					result = 0;
+					i = 1
+					i<=100为true
+					result = 0 + 1 = 1
+					i = 2
+
+					i<=100为true
+					result = 1 + 2 = 3
+					i = 3
+
+					...
+
+					i = 100
+
+					i<=100为true
+					result = 4950 + 100 = 5050
+					i = 101
+
+					i<=100为false，跳出for循环
+
+			2.while循环(前置判断循环)
+				初始化条件
+				while(判定结束条件){
+					循环体
+					迭代
+				}
+
+				var result = 0;
+				var i = 1;
+				while(i<=100){
+				    result = result + i;
+				    i++;
+				}
+				console.log(result);
+
+			3.do-while循环(后置判断循环)
+				初始化条件
+				do {
+					循环体
+					迭代
+				} while(判定结束条件)
+
+				var result = 0;
+				var i = 1;
+				do {
+				    result += i;
+				    i++;
+				} while(i<=100)
+				console.log(result);
+
+	3、对象	万物皆可对象
+		1) 介绍
+			属于复杂的数据类型(引用数据类型)，一般情况下，一个对象当中可以包含多个属性和方法。
+		2) 对象的规则：	
+				1.对象以{}作为边界
+				2.一个对象当中可以包含多个属性和方法(方法是一个特殊的属性)
+				3.每个属性与属性之间通过逗号分隔
+				4.属性名与属性值之间通过冒号分割
+				5.属性名可以不使用引号，但是如果属性名包含特殊字符(空格)，需要使用引号
+				6.属性值一般是具体的值(常量)，也可以是变量
+				7.最后一个属性值后面不需要加逗号
+
+			var name = '杰普'
+
+			var obj = {
+				name:this.name,
+				age:25,
+				gender:'male',
+				phone:13412741213,
+				sayMyWork:function(){
+					console.log('我在杰普上班')
+				},
+				'hello wolrd':function(){
+
+				}
+			}
+
+		3) 对象的创建方式
+			1.对象字面量
+				var obj = {}
+
+				var obj = {
+					name:'xpf',
+					age:25,
+					gender:'male'
+				}
+			2.Object构造函数
+				var obj = new Object();
+				obj.name = 'xpf';
+				obj.age = 25;
+				obj.gender = 'male';
+				动态新增属性名
+
+				值传递和引用传递
+
+		4) 对象的访问
+			点访问符 .
+				var obj = {
+					name:'xpf',
+					age:25,
+					gender:'male'
+				}
+				console.log(obj.gender);	//male
+
+			中括号访问符	[]
+				var obj = {
+				    name:'xpf',
+				    age:25,
+				    gender:'male'
+				}
+
+				var gender = 'gender'
+				console.log(obj[gender]); //male
+
+				console.log(obj['gender']); //male
+
+			思考：如何访问属性hello world
+				var obj = {
+					phone:13412741213,
+					'hello wolrd':function(){
+						console.log('hello world')
+					}
+				}
+
+		5) 删除属性
+			var obj = {
+			    name:'xpf',
+			    age:25,
+			    gender:'male'
+			}
+			console.log(obj); // { name: 'xpf', age: 25, gender: 'male' }
+			delete obj.age;
+			console.log(obj); // { name: 'xpf', gender: 'male' }
+
+
+		数组api	
+			pop
+			push
+			shift
+			unshift
+			...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

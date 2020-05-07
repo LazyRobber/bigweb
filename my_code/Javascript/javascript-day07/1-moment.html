@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>时间格式处理</title>
+	<!-- 引入第三方库moment.js -->
+	<script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+</head>
+<body>
+	<script>
+		var date = new Date();
+		var timeAll = date.getTime();
+		var result = moment(timeAll).format('YYYY/MM/DD hh:mm:ss');
+		console.log(result);
+	</script>
+</body>
+</html>

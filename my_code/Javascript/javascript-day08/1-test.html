@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试</title>
+	<script>
+		// 在文档加载完毕之后，执行函数体内部的代码
+		window.onload = function(){
+			var dom = document;
+			// 方法
+			var dom1 = document.getElementById('helloDiv');
+			var dom2 = document.getElementsByClassName('xiaohong')[0];
+			var dom3 = document.getElementsByName('xiaohei')[0];
+			var dom4 = document.getElementsByTagName('div')[0];
+			console.log(dom1);
+			console.log(dom2);
+			console.log(dom3);
+			console.log(dom4);
+			// 属性
+			console.log(dom.title);
+			console.log(dom.body);
+			console.log(dom.head);
+		}
+	</script>
+</head>
+<body>
+	<div id="helloDiv" class="xiaohong" name="xiaohei">hello</div>
+</body>
+</html>

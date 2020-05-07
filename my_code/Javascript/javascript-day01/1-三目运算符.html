@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>三目运算符应用案例</title>
+	<script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<ul v-for="(item,index) in list" :key="item.id">
+			<!-- 如何实现点击当前li标签，将当前li标签的背景色变为红色，字体颜色变为白色？ -->
+			<li :class=" index == activeClass ? 'active' : '' " @click="changeStyle(item,index)">{{item.name}}</li>
+		</ul>
+	</div>
+	<script>
+		new Vue({
+			el:'#app',
+			data(){
+				return {
+					list:[{
+						id:1,
+						name:'terry'
+					},{
+						id:2,
+						name:'tom'
+					},{
+						id:3,
+						name:'katy'
+					}],
+					activeClass:-1,
+				}
+			},
+			methods:{
+				changeStyle(item,index){
+					this.activeClass = index
+					console.log(index)
+				}
+			}
+		})
+	</script>
+	<style>
+		.active{
+			color: white;
+			background-color: red;
+		}
+	</style>
+</body>
+</html>

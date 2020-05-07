@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>拼接运算符应用案例一</title>
+	<script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+	<script src="https://cdn.bootcss.com/axios/0.19.2/axios.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<ul v-for="(item,index) in list" :key="item.id">
+			<li>{{item.name}}</li>
+		</ul>
+	</div>
+	<script>
+		new Vue({
+			el:'#app',
+			data(){
+				return {
+					list:[]
+				}
+			},
+			created(){
+				this.findCategoryByParentId()
+			},
+			methods:{
+				findCategoryByParentId(){
+					var id = 1;
+					axios.get('http://47.106.244.1:8099/manager/category/findCategoryByParentId?id=' + id).then((res)=>{
+						console.log(res.data.data)
+						this.list = res.data.data
+					})
+				}
+			}
+		})
+	</script>
+</body>
+</html>

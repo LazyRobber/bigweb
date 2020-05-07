@@ -1,0 +1,429 @@
+1、正则表达式
+		1) 含义
+		2) 正则表达式的定义
+			1. 构造函数模式
+				var pattern = new RegExp('ab','img');
+			2. 正则表达式字面量
+				var pattern = /ab/img;
+
+			正则表达式修饰符
+				i 	忽略大小写
+				m	多行匹配
+				g	全局匹配
+					lastIndex
+
+		3) 正则表达式的原型属性
+			RegExp.prototype.xxx
+				RegExp.prototype.global	   
+				RegExp.prototype.ignoreCase	
+				RegExp.prototype.mutiline	
+				RegExp.prototype.source 	正则表达式的字符串表示	
+				RegExp.prototype.flags	 	正则表达式修饰符的字符串表示	
+		4) 正则表达式的原型方法
+			RegExp.prototype.xxx
+				1.RegExp.prototype.test()
+					用法：检测一个字符串是否匹配某个模式
+					参数：待检测的字符串
+					返回值：
+						被检测的字符串满足正则表达式的匹配模式，返回true，否则返回false
+				2.RegExp.prototype.exec()
+					用法：从字符串中找出满足条件的字符
+					参数：待检测的字符串
+					返回值：数组或null
+						加g		维护一个属性lastIndex
+						不加g	不维护一个属性lastIndex
+
+				找出所有满足条件的字符串，如何实现？
+					while循环
+					while(result = pattern.exec(str)){
+
+					}
+
+				match() -> 字符串方法
+					var str = 'hello';
+					var pattern = /ab/img;
+
+					console.log(str.match(pattern)); // []
+
+		5) 正则表达式
+			1. 字符类
+				. 		单个字符
+				\d		数字
+				[0-9]
+
+				\D 		非数字
+				[^0-9]
+
+				\w 		字符
+				[a-zA-Z0-9_]
+
+				\W 		非字符
+				[^a-zA-Z0-9_]
+
+				^		以什么开始
+				$		以什么结束
+
+				\s 		空白字符
+				\S 		非空白字符
+
+			2. 分组
+				()
+
+				时间格式 2020-04-26
+					var str = '2020-04-26';
+					var pattern = /(\d{4})-(\d{2})-(\d{2})/img;
+
+					console.log(pattern.test(str)); // true
+
+					var str = '2020/04/26';
+					var pattern = /(\d{4})-(\d{2})-(\d{2})/img;
+
+					console.log(pattern.test(str)); // false
+
+				时间格式 2020/04/26
+					需要对/ 进行转义	--->  \/
+
+					var str = '2020/04/27';
+					var pattern = /(\d{4})\/(\d{2})\/(\d{2})/img;
+
+					console.log(pattern.test(str));
+
+			3. 数量词
+				exp{3}   	将前面表达式匹配3次
+				exp{3,5}   	将前面表达式匹配3~5次
+				exp{3,}   	将前面表达式匹配3+次
+
+				exp*		将前面表达式匹配0次或多次	
+				exp+ 		将前面表达式匹配1次或多次
+
+				贪婪匹配(默认情况下) 	-->  尽可能多的匹配
+					var pattern = /\d{3,}/img;
+					var str = 'abc123456789';
+
+					console.log(pattern.exec(str)); // 123456789
+
+				非贪婪匹配  -->  尽可能少的匹配
+					var pattern = /\d{3,}?/img;
+					//var pattern = /\d{3}/img;
+					var str = 'abc123456789';
+
+					console.log(pattern.exec(str)); // 123				
+
+		6) 判断邮箱
+			279923224@qq.com
+			xupf123@163.com
+			zhangsan@briup.cn
+
+			var pattern = /^(\w)+@(\w)+\.(\w{2,3})/img;
+			var str = 'xupf@qq.cn';
+
+			console.log(pattern.test(str));
+
+2、包装器类型
+	基本包装器
+		Number() String() Boolean()
+		进行基本数据类型之间的转换
+	除此之外
+		Math() Date() ...
+
+	思考：如何将一个字符串转换为数组？
+		'hello' -> ['h','e''l','l','o']
+
+		方法一：for循环
+			var str = 'helloworld';
+			var result = [];
+			for(var i=0;i<str.length;i++){
+			    result.push(str[i]);
+			}
+
+			console.log(result); // ['h','e','l','l','o','w','o','r','l','d']
+
+		方法二：
+			使用String()包装器的方法split()
+				var str = 'helloworld';
+				var result = str.split('');
+
+				console.log(result); // ['h','e','l','l','o','w','o','r','l','d']
+
+	String.prototype.xxx
+		length	
+			获取字符串的长度(数量)
+			var str = 'helloworld';
+			console.log(str.length); // 10
+
+		charAt(index)
+			获取指定索引上对应的字符
+			var str = 'helloworld';
+			console.log(str.charAt(4)); // 'o'  获取索引为4对应的字符
+
+		charCodeAt(index)
+			获取指定索引处的字符编码
+			var str = 'helloworld';
+			console.log(str.charCodeAt(4)); // 111
+
+		indexOf(val)
+			获取指定字符在字符串中首次出现时的索引，如果该字符不属于字符串，返回-1
+			var str = 'helloworld';
+			var result = str.indexOf('l');
+
+			console.log(result); // 2  获取'l'在字符串中首次出现时的索引
+
+
+			var str = 'helloworld';
+			var result = str.indexOf('1');
+
+			console.log(result); // -1  也就是说数字1不属于该字符串
+
+			拓展：数组去重  -->  数组中也有indexOf()方法，可以返回数组中某个指定的元素首次出现时的索引
+				var arr = [1,2,3,1,2,5]
+				-->
+				var arr = [1,2,3,5]
+
+
+				分析：
+					var arr = [1,2,3,1,2,5]
+						数组的索引0 1 2 3 4 5
+						检测结果  0 1 2 0 1 5
+
+				初步结果：arr.indexOf(arr[i]) != i时，将该元素删除
+
+				解决方案：
+					var arr = [1,2,3,1,2,5];
+
+					function norepeat(arr){
+					    for(var i=0;i<arr.length;i++){
+					        if(arr.indexOf(arr[i]) != i){
+					            arr.splice(i,1);
+					            i--;
+					        }
+					    }
+					    return arr;
+					}
+
+					var result = norepeat(arr);
+					console.log(result);
+
+				执行过程：
+					arr.indexOf(arr[i]) 		i
+							0			        0
+							1					1
+							2					2
+							0					3
+
+		concat()	
+			连接两个字符串
+			var str1 = 'hello';
+			var str2 = 'world';
+			console.log(str1.concat(str2)); // 'helloworld'
+
+		slice(begin,end)
+			截取子字符串，begin为开始位置，end为结束位置，截取时，不包含结束位置
+			var str = 'helloworld';
+			console.log(str.slice(2,4)); // 'll'
+
+		trim()
+			删除字符串左右两侧的空格，无法删除字符串中间的空格
+			var str = ' hello world ';
+			console.log(str.trim()); // 'hello world';
+
+		toUpperCase()
+			转换为大写
+			var str = 'hello world';
+			console.log(str.toUpperCase()); // 'HELLO WORLD'
+
+		toLowerCase()
+			转换为小写
+			var str = 'HELLO WORLD';
+			console.log(str.toLowerCase()); // 'hello world'
+
+		match(regexp)
+			查找匹配的内容，返回一个数组，保存的是所有匹配的内容
+			var str = 'hello';
+			var pattern = /he/img;
+
+			console.log(str.match(pattern)); // ['he']
+
+		split()
+			把字符串分割为字符串数组
+			使用了''
+				var str = 'hello';
+				var result = str.split('');
+				console.log(result); // [ 'h', 'e', 'l', 'l', 'o' ]
+			没有使用''
+				var str = 'hello';
+				var result = str.split();
+				console.log(result); // [ 'hello' ]
+
+				等价于
+				var str = 'hello';
+				var arr = [];
+				arr.push(str);
+
+				console.log(arr); // [ 'hello' ]
+
+3、Math对象
+	Math.ceil()		向上舍入
+	Math.floor()	向下舍入
+	Math.round()	四舍五入
+	Math.random() 	会产生一个随机数，0-1之间的小数
+
+	var num = 12.6;
+
+	console.log(Math.ceil(num)); // 13
+	console.log(Math.floor(num)); // 12
+	console.log(Math.round(num)); // 13
+
+4、Date日期对象
+	1) 实例化日期对象
+		var date = new Date();
+		console.log(date); // 2020-04-27T06:06:51.271Z
+
+		此时间表示世界标准时间，我们中国属于东八区，需要加8小时才是我们的时间
+
+	2) Date对象的方法
+		getDate()
+			返回一个月中的某一天(0-31)
+			var date = new Date();
+			var result = date.getDate();
+
+			console.log(result); // 27
+
+		getFullYear()
+			返回一个表示年份的4位数字
+			var date = new Date();
+			var result = date.getFullYear();
+
+			console.log(result); // 2020
+
+		getMonth()
+			返回表示月份的数字(0-11)，0表示一月，11表示12月
+			var date = new Date();
+			var result = date.getMonth();
+
+			console.log(result); // 3
+
+		getDay()
+			返回一个星期中的某一天 (0-6)，0表示周日，6表示周六
+			var date = new Date();
+			var result = date.getDay();
+
+			console.log(result); // 1
+
+		getHours()
+			返回时
+		getMinutes()
+			返回分
+		getSeconds()
+			返回秒
+				var date = new Date();
+				var hour = date.getHours();
+				var minute = date.getMinutes();
+				var second = date.getSeconds();
+
+				console.log(date);
+				console.log(hour);
+				console.log(minute);
+				console.log(second);
+
+		getTime()
+			返回一个时间戳，从1970年1月1日至今的毫秒数
+
+			时间戳	
+				格林威治时间1970年1月1日00时00分00秒
+				至
+				现在的总秒数
+			var date = new Date();
+			var timeAll = date.getTime();
+
+			console.log(date);
+			console.log(timeAll);
+
+		toLocaleString()
+			根据本地时间把Date对象转换为字符串，并返回
+			2020/04/27 14:34:23
+
+			var date = new Date();
+			console.log(date.toLocaleString()); // 4/27/2020, 2:34:23 PM
+
+	3) 前后端交互
+		前台		-> 		后台
+			时间戳
+		后台		-> 		前台
+			时间戳
+
+			2020/04/27 14:38:10
+
+		思考：
+			1. 如何将标准时间转换为正常的时间格式？ 2020-04-27 14:57:20
+			方法一：(原生js)
+				var date = new Date();
+				function timeFormat(dateStr){
+				    //获取年份
+				    var year = dateStr.getFullYear();
+				    //获取月份
+				    var month = (dateStr.getMonth() + 1).toString();
+				    //获取日
+				    var day = dateStr.getDate().toString();
+				    //获取小时
+				    var hour = dateStr.getHours().toString();
+				    //获取分钟
+				    var minute = dateStr.getMinutes().toString();
+				    //获取秒
+				    var second = dateStr.getSeconds().toString();
+				    return year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;
+				}
+				var result = timeFormat(date);
+
+				console.log(date);
+				console.log(result,'---');
+
+
+				补全位数：padStart(2,'0')
+				var date = new Date();
+				function timeFormat(dateStr){
+				    var dt = dateStr;
+				    //获取年份
+				    var year = dt.getFullYear();
+				    //获取月份
+				    var month = (dt.getMonth() + 1).toString().padStart(2,'0');
+				    //获取日
+				    var day = dt.getDate().toString().padStart(2,'0');
+				    //获取小时
+				    var hour = dt.getHours().toString().padStart(2,'0');
+				    //获取分钟
+				    var minute = dt.getMinutes().toString().padStart(2,'0');
+				    //获取秒
+				    var second = dt.getSeconds().toString().padStart(2,'0');
+
+				    return year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;
+				}
+				var result = timeFormat(date);
+
+				console.log(date);
+				console.log(result,'---');
+
+			方法二：(第三方库moment.js)
+				var date = new Date();
+				var result = moment(date).format('YYYY/MM/DD hh:mm:ss');
+				console.log(result);
+
+			2.如何将时间戳转换为正常时间格式？
+				var date = new Date();
+				//获取时间戳
+				var timeAll = date.getTime();
+				//使用moment处理时间格式
+				var result = moment(timeAll).format('YYYY/MM/DD hh:mm:ss');
+				console.log(result);
+
+			前端中第三方库的使用
+				.html	 script标签引入 cnd
+				vue		 通过npm下载
+			cnd	
+				https://www.bootcdn.cn/all/
+
+			第三方库
+				moment
+				lodash
+				qs
+
+5、高级面向对象

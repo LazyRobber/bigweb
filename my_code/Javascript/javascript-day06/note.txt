@@ -1,0 +1,440 @@
+这周安排
+	今天
+		正则表达式
+	周一
+		包装器、Date()、Math()
+	周二
+		构造函数、原型、继承
+	周三
+		DOM
+	周四
+		BOM
+
+复习
+	1、数组遍历
+		1) for循环
+		2) while循环
+		3) do-while循环
+		*4) for-in增强for循环
+			for(var key in arr){
+				key就是数组arr的索引
+				arr[key]就是数组arr中的每一个元素
+			}
+
+	2、判断是否是数组
+		Array.isArray()
+
+		var arr = [1,2,3];
+		var obj = {name:'xpf'}
+		Array.isArray(arr); // true
+		Array.isArray(obj); // false
+
+		instanceof() 引用数据类型
+			判断某一个变量是否是一个构造函数的实例
+		typeof() 基本数据类型
+
+	3、数组API
+		1) 添加元素、删除元素
+			push	在数组的最后新增元素
+			pop		将数组的最后一个元素取出来
+			shift	将数组的第一个元素删除
+			unshift 将元素新增到数组的最前面
+		2) 排序方法
+			sort()
+			var arr = [3,2,1,12,21];
+			比较器函数
+				sort(function(a,b){
+					if(a>b){
+						return 1; // 从小到大
+					} else {
+						return -1; // 从大到小
+					}
+				})
+		3) 数组序列化
+			将数组转换成字符串
+			1. toString()
+			 	没有参数
+			2. join()
+			3. JSON.stringify()
+				JSON.stringify(arr)
+		4) 数组截取方法
+			1. concat()
+				将两个数组拼接，返回合并后的数组
+			2. slice()
+				从一个数组中截取一个子数组，返回截取到的子数组
+			3. splice()
+				从使用改方法的数组中删除、新增
+		5) 数组迭代方法
+			forEach(function(item,index,arr){})
+				遍历当前数组，没有返回值
+					item数组的每一项
+					index数组的索引
+					arr当前遍历的数组
+			every()
+				判断数组中所有的元素是否都符合给定的条件，如果有一个不满足，都返回false
+			some()
+				判断数组中是否有符合给定条件的元素，如果有一个满足，都返回true
+			filter()
+				筛选数组中满足给定条件的元素
+			map()
+				使用给定条件处理数组(映射)
+		6) 类数组转换为数组
+			arguments --> 迭代器
+			1. [...arguments] // 改方法只对拥有迭代器的有效
+			2. Array.from(arguments)
+			3. Array.prototype.slice.call(arguments)
+
+			自己创建一个类数组对象的时候，一定要加迭代器
+			[Symbol.iterator].Array.prototype[Symbol.iterator]
+
+学习
+	1、正则表达式
+		1) 含义
+			当搜索文本中的数据时，可以使用搜索模式来描述搜索的内容
+			也就是说，正则表达式会去查找字符串中符合某个模式的部分
+
+			->
+
+			前端中的表单验证，即对输入框的内容做了限制
+				手机号：15700..
+				邮箱：zhangsan@163.com
+
+		2) 正则表达式定义方式
+			1. 构造函数模式
+				var pattern = new RegExp('正则表达式','正则表达式修饰符');
+
+				var pattern = new RegExp('ab','img');
+				console.log(pattern); // /ab/gim
+
+			2. 正则表达式字面量
+				var pattern = /正表达式/正则表达式修饰符;
+
+				var pattern2 = /ab/img;
+				console.log(pattern2); // /ab/gim
+
+			正则表达式修饰符
+				i 	ignoreCase 	执行对大小写不敏感的匹配(忽略大小写)
+				g  	global 		执行全局匹配(查找所有匹配，而不是在找到第一匹配到的字符之后停止匹配)
+				m   multiline  	执行多行匹配
+
+		3) 正则表达式原型属性
+			RegExp.prototype.xxx
+				RegExp.prototype.global 	布尔值，表明这个正则表达式是否带有修饰符g
+				RegExp.prototype.ignoreCase 布尔值，表明这个正则表达式是否带有修饰符i
+				RegExp.prototype.multiline  布尔值，表明这个正则表达式是否带有修饰符m
+				RegExp.prototype.source 	正则表达式的字符串表示
+				RegExp.prototype.flags	 	正则表达式修饰符的字符串表示
+
+				var pattern = /ab/img;
+
+				console.log(pattern.global); // true
+				console.log(pattern.ignoreCase); // true
+				console.log(pattern.multiline); // true
+				console.log(pattern.source); // 'ab'
+				console.log(pattern.flags); // 'img'
+
+				var pattern = /ab/im;
+
+				console.log(pattern.global); // false
+				console.log(pattern.ignoreCase); // true
+				console.log(pattern.multiline); // true
+
+		4) 正则表达式原型方法
+			RegExp.prototype.xxx
+				1. RegExp.prototype.test()
+					用法：检测一个字符串是否匹配某个模式
+					参数：待检测的字符串
+					返回值：
+						如果被检测的字符串满足正则表达式的匹配模式，返回true，否则返回false
+					var pattern = /abc/img;
+					var str = 'hello world abc';
+					var result = pattern.test(str);
+					console.log(result); // true
+
+					var pattern = /abc/img;
+					var str = 'hello world ab c';
+					var result = pattern.test(str);
+					console.log(result); // false
+
+					会从hello world abc的第一个字母开始，一个一个检测是否有a，当遇到a的时候，去判断a的后面是否是b，如果是，再去判断b的后面是否是c，如果是，返回true
+
+				2. RegExp.prototype.exec()
+					用法：检测字符串中的正则表达式的匹配 -> 从str中查找出满足正则表达式的字符串
+					参数：待检测的字符串
+					返回值：数组或者null
+						如果正则表达式中有'g'修饰符，这时，在pattern中会维护一个lastIndex属性，记录下一次开始的位置，当第二次执行exec方法的，会从lastIndex开始检索
+						如果正则表达式中没有'g'修饰符，这时，在pattern中不会维护一个lastIndex属性，当第二次执行exec方法的，会从开始位置检索
+
+						有g修饰符 --> 维护lastIndex
+							执行了一次exec方法
+								var pattern = /abc/img;
+								var str = 'ababc ac ab abcd we';
+
+								console.log(pattern.exec(str));
+								console.log(pattern.lastIndex); // 5 下一次检索开始的位置
+
+							执行了两次exec方法
+								var pattern = /abc/img;
+								var str = 'ababc ac ab abcd we';
+
+								console.log(pattern.exec(str));
+								console.log(pattern.lastIndex); // 5 下一次检索开始的位置
+
+								console.log(pattern.exec(str));
+								console.log(pattern.lastIndex); // 15 下一次检索开始的位置
+
+							执行了三次exec方法
+								var pattern = /abc/img;
+								var str = 'ababc ac ab abcd we';
+
+								console.log(pattern.exec(str));
+								console.log(pattern.lastIndex); // 5
+
+								console.log(pattern.exec(str));
+								console.log(pattern.lastIndex); // 15
+
+								console.log(pattern.exec(str)); // null
+								console.log(pattern.lastIndex); // 0
+
+						没有g修饰符 --> 不会维护lastIndex
+							var pattern = /abc/img;
+							var str = 'ababc ac ab abcd we';
+
+							console.log(pattern.exec(str));
+							console.log(pattern.lastIndex); // 0
+
+							console.log(pattern.exec(str));
+							console.log(pattern.lastIndex); // 0
+
+						错误代码：只打印了两次结果，并没有调用两次exec方法
+							var pattern = /abc/img;
+							var str = 'ababc ac ab abcd we';
+							var result = pattern.exec(str);
+
+							console.log(result);
+							console.log(pattern.lastIndex); // 5
+
+							console.log(result);
+							console.log(pattern.lastIndex); // 5
+
+						此时，我需要匹配abcd或者abce，即找出字符串中满足两种条件的字符串
+							|  表示从左右两侧选择以重符合条件的字符串(或)
+							var pattern = /abc(d|e)/img;
+							var str = 'ababce ac ab abcd we';
+
+							console.log(pattern.exec(str)); // abce
+							console.log(pattern.exec(str)); // abcd
+
+						上述代码，找出两个满足条件的字符串时，需要调用两次exec方法
+
+						思考：如果说，需要找到字符串中所有满足条件的字符串，该如何实现？
+
+						答案：使用循环	
+							while(){}
+
+							var pattern = /abc(d|e)/img;
+							var str = 'ababce ac ab abcd we';
+
+							console.log(pattern.exec(str));
+							console.log(pattern.exec(str));
+							console.log(pattern.exec(str)); // null
+							说明第三次调用exec方法时，该字符串中已经没有满足条件的字符串
+
+						-->	循环时，调用exec方法，直到exec() == null时，结束循环
+							var pattern = /abc(d|e)/img;
+							var str = 'ababce ac ab abcd we';
+
+							var temp = [];
+							while(result = pattern.exec(str)){
+							    temp.push(result);
+							}
+
+							console.log(temp); // 二维数组
+
+						思考：如何将满足条件的字符串单独放到一个数组中 --> ['abcd','abce']
+							var pattern = /abc(d|e)/img;
+							var str = 'ababce ac ab abcd we';
+
+							var temp = [];
+							while(result = pattern.exec(str)){
+							    temp.push(result[0]);
+							}
+
+							console.log(temp); // ['abcd','abce']
+
+						match()	-->  字符串方法
+							用法：可在字符串内检索指定的值，找到一个或多个正则表达式的匹配
+							var pattern = /abc(d|e)/img;
+							var str = 'ababce ac ab abcd we';
+
+							console.log(str.match(pattern)); // ['abcd','abce']
+
+		5) 正则表达式
+			1. 字符类
+				. 		匹配任何单个字符
+				\d 		匹配任意的数字，等价于[0-9]
+					/\d/img; ==> /[0-9]/img;
+				[0-9]	匹配任意的数字
+
+				\D 		匹配任意的非数字，等价于[^0-9]
+				[^0-9]  匹配任意的非数字
+					/\D/img; ==> /[^0-9]/img;
+
+				\w 		匹配字符，等价于[a-zA-Z0-9_]		
+				\W 		匹配非字符，等价于[^a-zA-Z0-9_]
+
+				^		匹配开始的字符
+					^[0-9]   匹配以数字作为开始
+				$		匹配结束的字符
+					[0-9]$	 匹配以数字作为结束
+
+				\s  	匹配空白符，tab、space、return...
+				\S 		匹配非空白字符
+
+					案例一：
+						匹配['123']
+							var str = 'abc123.abc.d1234';
+							//var pattern = /\d\d\d/img;
+							var pattern = /[0-9][0-9][0-9]/img;
+
+							console.log(str.match(pattern)); // ['123','123']
+
+						匹配['123.']
+							错误代码：
+								var str = 'abc123.abc.d1234';
+								var pattern = /\d\d\d./img;
+
+								console.log(str.match(pattern)); // ['123.','1234']
+								注意：此处的.并表示. 而是表示匹配任意的单个字符
+
+							正确代码：
+								转义，使用\进行转义(. /)
+								var str = 'abc123.abc.d1234';
+								var pattern = /\d\d\d\./img;
+
+								console.log(str.match(pattern)); // ['123.']
+
+						匹配['123.','abc.']
+							var str = 'abc123.abc.d1234';
+							var pattern = /\w\w\w\./img;
+							//var pattern = /[a-zA-Z0-9_][a-zA-Z0-9_][a-zA-Z0-9_]\./img;
+
+							console.log(str.match(pattern)); // ['123.','abc.']
+
+					案例二：
+						var str = 'abcd\n1ac\nqwer\n2zxcv';
+						console.log(str);
+
+						\n表示换行
+							abcd
+							1ac
+							qwer
+							2zxcv
+
+						匹配以0-9开始的字符
+							多行匹配 m
+								var str = 'abcd\n1ac\nqwer\n2zxcv';
+								var pattern = /^[0-9]/img;
+
+								console.log(str.match(pattern)); // ['1','2']
+							取消多行匹配
+								var str = 'abcd\n1ac\nqwer\n2zxcv';
+								var pattern = /^[0-9]/ig;
+
+								console.log(str.match(pattern)); // null
+								只对第一行字符串进行了匹配
+
+						匹配以d或r结束的字符
+							正确代码
+								var str = 'abdc\n1ac\nqwer\n2zxcv';
+								var pattern = /(d|r)$/img;
+
+								console.log(str.match(pattern)); // ['r']
+
+							错误代码
+								var str = 'abdc\n1ac\nqwer\n2zxcv';
+								var pattern = /d|r$/img; // 解析成匹配d或者以r结束
+
+								console.log(str.match(pattern)); // ['d',r']
+
+					案例三：	
+						判断一个手机号位数 
+						11位 以1开始
+							情况一：没加结束条件 $
+								var str = '15719344291';
+								var pattern = /^1\d{10}/img;
+
+								console.log(pattern.test(str)); // true
+
+								var str = '157193442912qwer';
+								var pattern = /^1\d{10}/img;
+
+								console.log(pattern.test(str)); // true
+								只要字符串满足了以1开始，后面为10个数字的条件之后，不管字符串后面接的什么内容，都会返回true
+							情况二：加了结束条件 $
+								var str = '15719344291';
+								var pattern = /^1\d{10}$/img;
+
+								console.log(pattern.test(str)); // true
+
+								var str = '157193442912';
+								var pattern = /^1\d{10}$/img;
+
+								console.log(pattern.test(str)); // false
+								只有当字符串满足以1开始，后面时10个数字的条件，才返回true，多一位少一位都不行
+
+			2. 分组	
+				()代表分组，在正则表达式中用()包裹起来的内容代表了一个分组
+
+				案例一：
+					var str1 = 'I come from anhui';
+					var str2 = 'I come from hubei';
+					var pattern = /I come from (jiangsu|anhui|beijing)/img;
+
+					console.log(pattern.test(str1)); // true
+					console.log(pattern.test(str2)); // false
+
+				案例二：
+					时间格式 2020-04-26
+						var str = '2020-04-26';
+						var pattern = /(\d{4})-(\d{2})-(\d{2})/img;
+
+						console.log(pattern.test(str)); // true
+
+						var str = '2020/04/26';
+						var pattern = /(\d{4})-(\d{2})-(\d{2})/img;
+
+						console.log(pattern.test(str)); // false
+
+
+
+
+
+
+
+
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>拼接运算符应用案例</title>
+	<script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- 情况一：图片地址返回完全 -->
+		<ul v-for="(item,index) in list1" :key="item.id">
+			<img :src="item.imgUrl" alt="">
+		</ul>
+		<!-- 情况二：图片地址返回不完全 -->
+		<ul v-for="(item,index) in list2" :key="item.id">
+			<img :src=" 'http://134.175.154.93:8888/group1/' + item.imgUrl" alt="">
+		</ul>
+	</div>
+	<script>
+		new Vue({
+			el:'#app',
+			data(){
+				return {
+					list1:[{
+						id:1,
+						imgUrl:'http://134.175.154.93:8888/group1/M00/00/2E/rBAACV5h0sGAWbrkAAA9XpTHPSQ68.jpeg'
+					}],
+					list2:[{
+						id:1,
+						imgUrl:'M00/00/2E/rBAACV5h0sGAWbrkAAA9XpTHPSQ68.jpeg'
+					}]
+				}
+			},
+			created(){
+				
+			},
+			methods:{
+			
+			}
+		})
+	</script>
+</body>
+</html>

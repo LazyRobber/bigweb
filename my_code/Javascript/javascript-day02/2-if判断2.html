@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>if判断在vue中的使用案例二</title>
+	<script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<ul v-for="(item,index) in list" :key="item.id">
+			<li>
+				<span class="nameSpan">{{item.name}}</span>
+				<span class="tagSpan" v-if="index == 0">No.1</span>
+				<span class="tagSpan" v-else-if="index == 1" style="background-color: lightblue">No.2</span>
+				<span class="tagSpan" v-else-if="index == 2" style="background-color: teal">No.3</span>
+				<span class="tagSpan" v-else  style="background-color: black;color: #fff">No.{{index + 1}}</span>
+			</li>
+		</ul>
+	</div>
+	<script>
+		new Vue({
+			el:'#app',
+			data(){
+				return {
+					list:[{
+						id:1,
+						name:'震惊！昆山软件园竟然要修建一所高中'
+					},{
+						id:2,
+						name:'震惊！昆山软件园竟然要修建一所高中'
+					},{
+						id:3,
+						name:'震惊！昆山软件园竟然要修建一所高中'
+					},{
+						id:4,
+						name:'震惊！昆山软件园竟然要修建一所高中'
+					},{
+						id:5,
+						name:'震惊！昆山软件园竟然要修建一所高中'
+					}],
+				}
+			},
+			methods:{
+				
+			}
+		})
+	</script>
+	<style>
+		.nameSpan{
+			height: 25px;
+			line-height: 25px;
+			float: left;
+		}
+		.tagSpan{
+			height: 25px;
+			width: 35px;
+			float: left;
+			text-align: center;
+			line-height: 25px;
+			border-radius: 2px;
+			margin-left: 5px;
+			background-color: red;
+			opacity: 0.8;
+		}
+	</style>
+</body>
+</html>

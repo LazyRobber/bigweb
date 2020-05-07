@@ -1,0 +1,306 @@
+1、JavaScript主讲
+	许品锋
+2、为什么要学JavaScript？
+	1、登录功能如何实现？
+	2、如何实现页面间的跳转功能？
+	3、如何实现点赞、收藏功能？
+
+	通过编写JavaScript脚本
+
+3、前端课程体系
+	html5
+	css3
+	linux云服务器
+	JavaScript
+	bootstrap
+	jQuery
+	ES6
+	vue框架
+	微信小程序
+	nodejs
+
+4、JavaScript的优点(用途)
+	1、能对浏览器事件做出响应
+	2、表单验证，减轻服务器的压力
+		前端对于登录所输入的账号密码做了限制
+
+5、学习JavaScript方式
+	推荐网站：
+		代码练习：https://www.freecodecamp.one/
+		mdn：https://developer.mozilla.org/zh-CN/
+		csdn、博客园、掘金
+	推荐书籍：
+		红宝书：JavaScript高级程序设计
+		犀牛：JavaScript权威指南
+
+6、JavaScript的组成
+	1) ECMAScript5	(es5)	JavaScript语法标准  es6
+		变量
+		注释
+		操作符
+		流程控制语句
+		数组
+		函数
+		对象
+	2) DOM	(文档对象模型)
+		js操作html
+		选中浏览器页面任意元素
+			var dom = document.getElementById('#app')
+			var dom = document.getElementsByTagName('test')
+		绑定事件
+			dom.onclick = function(){}
+		监听	
+			dom.addEventListener(function(){})
+	3) BOM	(浏览器对象模型)
+		js操作浏览器
+			setTimeout(function(){})
+			setInterval(function(){})
+			alert()
+
+7、js解析器
+	1、目前所有主流浏览器都有js解析器
+		火狐、谷歌、opera、ie10+
+	2、js不仅仅可以运行在浏览器中，还可以运行在服务器中
+		js运行在浏览器中：动画、表单验证、ajax请求...
+		js运行在服务器中：操作数据库、代码编译、网络...
+
+		java可通过sql语句操作mysql
+		nodejs可通过sql语句操作mysql
+
+8、下载nodejs
+	1) 更新源
+		apt-get update/sudo apt-get update
+		只有更新之后，才能下载最新的安装包
+	2) 下载nodejs安装包
+		apt-get install nodejs/sudo apt-get install nodejs
+		注意：如果下载完nodejs之后，没有建立软连接，就只能使用nodejs
+		nodejs + 回车进入命令行模式
+		node + 回车是无法进入的
+	3) 查看版本号
+		nodejs -v
+		出现版本号即说明nodejs下载完成
+	4) 创建软连接(快捷方式)
+		ln -s /usr/bin/nodejs /usr/bin/node
+		sudo ln -s /usr/bin/nodejs /usr/bin/node
+
+		注意：如果报错'/usr/bin/node' file exits，说明已经创建好了node的快捷方式
+	5) 退出node命令行
+		.exit
+		ctrl + cc
+
+9、创建hello.js
+	1) 使用vi hello.js创建文件
+	2) 编写代码
+	3) 执行代码
+		node 文件名
+
+10、配置vi编辑器
+	spf13(为了更好的写代码)
+	1) 下载git
+		apt-get install git
+	2) 查看版本号
+		git --version
+	3) 下载spf13
+		curl https://j.mp/spf13-vim3 -L > spf13-vim.sh && sh spf13-vim.sh
+
+		注意：下载spf13时，要预先安装好Git 
+
+11、变量
+	1) 强类型
+		int a = 2;
+		a是一个值为2的整数类型，类型是由int
+		a = false;
+		以上表达式会报错，因为a是一个整数类型，不能再赋值成其他数据类型
+	2) 弱类型(变量的数据类型可以随时变换)
+		var a = 2;
+		a是一个值为2的数字类型，类型是由a = 2
+		var b = 'hello'
+		b是一个值为hellow的字符串类型，类型是由b = 'hello'
+
+		a = false;
+		将a的数据类型由数字类型转换为布尔类型
+
+	3) 变量声明
+		使用关键字var
+		var a;
+		var obj;
+		var arr;
+		只是声明一个变量，但是没有初始值，打印的时候值为undefined
+
+	4) 变量初始化
+		a = 2;
+		obj = 'hello';
+		arr = 123;
+
+		变量声明和初始化同时进行
+		var name = 'xpf';
+	5) 变量的使用
+		var a = 2;
+		a++;
+		注意：如果变量没有声明，会报错xxx is not defined
+
+	6) 变量的数据类型
+		基本数据类型
+			数字类型		number
+			字符串类型	string
+			布尔类型		boolean
+			null		
+			undefined	
+		引用数据类型
+			对象
+			函数
+			数组
+			正则表达式
+			...
+
+12、操作符
+	1) 算术运算符
+		+	加		+=
+			var a = 1;
+			a += 1;	// 2
+			等同于	a = a + 1；
+		-	减		-=
+		*	乘		*=
+		/	除
+		%	取余
+
+	2) 一元运算符
+		++	 自增
+			a++;
+				后置，先使用变量，再自增
+			++a;
+				前置，先自增，再使用变量
+
+			var a = 2;
+			var b = a++;
+			console.log(a);	// 3
+			console.log(b); // 2
+
+			var a = 2;
+			var b = ++a;
+			console.log(a);	// 3
+			console.log(b); // 3
+		--	 自减
+		+、-	 将其他数据类型转换为数字类型
+			var str = 'hello world';
+			console.log(typeof(str));	//string
+			console.log(typeof(+str));	//number
+			console.log(typeof(-str));  //number
+
+			1. typeof()可以用来检测基本数据类型，检测引用数据类型的时候，返回值并不精确
+			2. isNaN()可以用来检测一个变量是否是一个数字，返回一个布尔类型的值
+				NaN: not a number
+				var str = 'hello world';
+				isNaN(str);	//	true
+				var a = 1;
+				isNaN(a);	//	false
+
+	3) 逻辑运算符(表单验证)
+		&&	并且
+			两个表达式中，只要有任意一个的返回值为false，它都返回false
+			var a = true;
+			var b = false;
+			var c = a && b;
+			console.log(c);	//fasle
+
+			var age = 17;
+			var gender = 'male';
+			console.log(age > 18 && gender == 'male');	//	false
+
+		||	或
+			两个表达式中，只要由任意一个的返回值为true，它都返回true
+			var a = true;
+			var b = false;
+			var c = a || b;
+			console.log(c);	//	true		
+
+		!	非
+			取反
+			var a = true;
+			var b = !a;	
+			console.log(b);	// false
+
+			!true // false
+			!false // true
+
+	4) 比较运算符
+		==
+		!=
+			双等，比较值，会自动转换数据类型
+			var a = 1;
+			var b = '1';
+			console.log(typeof(a),'a');	// number
+			console.log(typeof(b),'b');	// string
+			console.log( a == b );		// true
+			console.log( a != b );		// false
+			console.log( a === b );		// false
+			console.log( a !== b );		// true
+		===
+		!==
+			三等(全等)，比较数据类型和值，先比较数据类型，如果数据类型不一致，就算值是一样的，仍然返回false；只有当数据类型一致的时候，才去比较值
+		>
+		>=
+		<
+		<=
+
+		var age = 17;
+		console.log(age > 17); // false
+		console.log(age >= 17); // true
+		
+	5) 三目运算符
+		exp1 ? exp2 : exp3
+		先判断exp1，exp1为true的时候，返回exp2；exp1为false的时候，返回exp3
+		var age = 18;
+		var gender = 'male';
+
+		//酒吧:年龄在18岁及以上的男性才能入场
+		var result = age >=18 && gender == 'male' ? '可以入场' : '不允许进入'
+		console.log(result);
+
+	6) 拼接运算符
+		+
+		当使用'+'，操作数中出现了字符串，那么肯定就是拼接运算符
+		var name = 'xpf';
+		var age = 25;
+
+		function sayName(name,age){
+		    console.log('my name is' + name + 'my age is' + age);
+		}
+		sayName(name,age);
+
+		1、案例一：
+			根据父栏目id查询子栏目
+
+			娱乐		
+				八卦、媒体、周边新闻...
+			新闻		
+				军事、篮球...
+			体育	
+
+		2、案例二：
+			情况一：图片地址返回完全
+			<ul v-for="(item,index) in list1" :key="item.id">
+				<img :src="item.imgUrl" alt="">
+			</ul>
+			
+			情况二：图片地址返回不完全
+			<ul v-for="(item,index) in list2" :key="item.id">
+				<img :src=" 'http://134.175.154.93:8888/group1/' + item.imgUrl" alt="">
+			</ul>
+
+
+
+
+---表单验证---
+	姓名：
+	密码：
+	手机号：
+
+	<input v-model="form.name" />
+	<input v-model="form.password" />
+	<input v-model="form.phone" />
+
+	if(form.name == '' && form.password == '' && form.phone == ''){
+		// 登录请求
+	}
+

@@ -1,0 +1,335 @@
+4月23
+	读书日
+	《无声告白》
+
+复习
+	1、序列化与反序列化
+		序列化 -> 将对象转换为json字符串
+			var obj = {
+				name:'xpf',
+				age:25
+			}
+			var str = JSON.stringify(obj);
+			console.log(str); // '{"name":"xpf","age":"25"}'
+
+		序列化的应用
+			1. vue项目中，路由跳转的时候携带对象
+			2. 请求后台，比如说登录的接口，他需要一个json字符串，所以说，对于前端开发者来说，我们需要将对象转为json字符串
+		反序列化 -> 将json字符串转换为一个对象
+			var str = '{"name":"xpf","age":"25"}';
+			var obj = JSON.parse(str);
+			console.log(obj); //{name:'xpf',age:25}
+
+	2、对象的遍历 (for-in)
+		var obj = {
+			name:'xpf',
+			age:25
+		}
+		for(var key in obj){
+			console.log(key); // 当前遍历对象中的所有属性名
+			console.log(obj[key]); // 当前遍历对象中的所有属性值
+		}
+
+	3、in关键字
+		检测一个属性名是否属于一个对象
+		var obj = {
+			name:'xpf',
+			age:25
+		}
+		console.log('name' in obj); // true
+		console.log('age' in obj); // true
+		console.log('gender' in obj); // false
+
+	4、函数
+		1. 分装一些请求方法：get、post、post_array
+		2. 函数的定义
+			1) 函数声明
+				function 函数名(形参){
+					函数体
+				}
+				function sayName(){
+					console.log('hello')
+				}
+			2) 函数表达式
+				var 函数名 = function(形参){
+					函数体
+				}
+				var fn = function(){
+					console.log('hello')
+				}
+			3) 函数的调用
+				函数名(实参); 
+				函数名.call(this,实参列表);
+				函数名.apply(this,实参数组);
+
+				function sayName(name,age){
+					console.log('hello')
+				}
+
+				var name = 'xpf';
+				var age = 25;
+
+				sayName(name,age);
+				sayName.call(name,age);
+				sayName.apply([name,age]);
+
+				拓展
+					函数加括号 -> 调用
+					函数不加括号 -> 改变引用地址
+
+					console.log() -> 函数没有返回值
+					return -> 函数有返回值
+
+			4) 函数提升
+				变量的提升
+				函数的提升
+					函数声明提升
+					函数表达式提升
+				函数优先
+
+			5) 值传递和引用传递
+				var a = 1;
+				var b = a;
+				b++;
+				console.log(a); // 1
+				console.log(b); // 2
+
+				var obj = {
+					name:'xpf',
+					age:25
+				}
+				var obj2 = obj;
+				obj2.age++;
+				console.log(obj.age); // 26
+				console.log(obj2.age); // 26
+
+学习
+			6) 函数内部属性
+				只能在函数运行的时候才能确定的属性，并且只能在函数内访问。
+					function add(a,b){
+					    console.log(a,'a');
+					    console.log(b,'b');
+					    console.log(arguments,'arguments');
+					    return a+b;
+					}
+					var result = add(2,3,4);
+					console.log(result);
+
+				1. 形参 (接收参数的快捷方式)
+					a -> 2
+					b -> 3
+				2. arguments (接收参数的真正所在)
+					类数组对象 -> 数组
+					当前函数接收的所有参数存储的地方
+					[Arguments] { '0': 2, '1': 3, '2': 4 }
+					length
+				3. this 当前对象 this的指向性问题
+						this的取值与函数的调用方式有关
+							函数名(实参); 
+							函数名.call(this,实参列表);
+							函数名.apply(this,实参数组);
+
+						function sayAge(){
+						    console.log(this);
+						}
+						var obj1 = {
+						    name:'xpf',
+						    sayName:function(){
+						        console.log(this.name);
+						    }
+						}
+						var obj2 = {
+						    name:'zhangsan',
+						    sayName:function(){
+						        console.log(this.name);
+						    }
+						}
+
+						sayAge(); // this指向当前global对象
+						obj1.sayName(); // xpf this指向obj1对象
+						obj2.sayName(); // zhangsan this指向obj2对象
+
+						结论一：
+							如果函数使用了 () 调用，那就看一下括号前面是不是函数名，如果是，再看函数名前面有没有对象
+								有对象，this指向该对象
+								没有对象	
+									nodejs	this指向global对象
+									浏览器 	this指向window对象
+
+						var pig = {
+						    words:'哼哼',
+						    sound:function(){
+						        console.log(this.words);
+						    }
+						}
+
+						var dog = {
+						    words:'汪汪'
+						}
+						pig.sound(); // 哼哼
+						pig.sound.call(dog); // 汪汪
+						通过使用call，可以将原本指向pig的this，指向了dog
+
+						继承
+
+						结论二：(更改this指向)
+							如果通过call、apply来调用，this的指向为用户手动指向的对象
+
+			7) 闭包
+				是指有权访问另一个函数作用域中的变量的函数，闭包可以让你从内部的函数访问到外部函数中的变量
+				形式：	函数中包含另一个函数
+					function fn1(){
+					    var name = 'xpf';
+					    //fn2就是一个闭包
+					    function fn2(){
+					        var age = 25;
+					        //使用父函数中声明的变量
+					        console.log(name);
+					    }
+					    fn2();
+					}
+					fn1();
+
+				参考：
+					https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures
+					JavaScript高级程序设计 第七章
+
+			8) 立即执行函数、匿名函数
+				(function(){
+				    console.log(1)
+				})();
+
+				(function(a,b){
+				    console.log(a+b)
+				})(1,2);
+
+		5、数组
+			1) 作用(特点)
+				1. 存放多个数据的集合
+				2. 数组的边界是 [] 
+				3. 数组的组成成为元素/项
+				4. 元素与元素之间通过逗号来分割
+				5. 元素的数据类型没有限制
+
+			2) 定义方式
+				1. 数组字面量
+					var arr1 = [];
+					console.log('arr1',arr1);
+					var arr2 = [1,'hello world',null,undefined,function(){},{name:'xpf'}];
+					console.log('arr2',arr2);
+
+				2. Array构造函数
+					var arr3 = new Array();
+					console.log('arr3',arr3); // []
+
+					var arr4 = new Array(3,4);
+					console.log('arr4',arr4); // [3,4]
+
+					var arr5 = new Array(1,'hello world',null);
+					console.log('arr5',arr5);
+
+					注意：
+						如果传递的是一个数字，则会按照该数字创建指定项数的数组，但是没有内容，也就是只定义了数组的长度
+						var arr6 = new Array(3);
+						console.log('arr6',arr6); // arr6 [ <3 empty items> ]
+
+						等同于==>
+
+						var arr = [,,,];
+
+						只希望数组中包含一个数字3，该如何实现？
+						使用数组字面量去创建
+							var arr = [3];
+
+			3) 数组的访问
+				数组名[索引]
+				索引：从0开始
+				一维数组
+				二维数组
+					[[1,2,3],[4,5,6]]
+
+				var arr = ['hello','world','xpf'];
+				console.log(arr[0]); // hello
+				console.log(arr[1]); // world
+				console.log(arr[2]); // xpf
+
+				注意：
+					如果指定索引的位置上没有值，返回undefined
+
+					var arr = ['hello','world','xpf'];
+					console.log(arr[3]); // undefined
+
+			4) 数组的属性
+				数组也是一个对象，length表示数组长度(个数)
+				var arr1 = ['hello','world','xpf'];
+				var arr2 = new Array(3);
+				var arr3 = [];
+
+				console.log(arr1.length); // 3
+				console.log(arr2.length); // 3
+				console.log(arr3.length); // 0
+
+				拓展：新增指定数值的项
+					length = 最后一项的索引index + 1
+					数组的长度始终比数组的最后一项的索引大1
+						var arr1 = ['hello','world','xpf'];
+						arr1[arr1.length] = '你好';
+						arr1[arr1.length] = '张三';
+
+						console.log(arr1);
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---构造函数---
+	Number()
+	String()
+	Boolean()
+	Object()
+	Array()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

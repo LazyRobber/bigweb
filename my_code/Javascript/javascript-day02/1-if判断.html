@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>if判断在vue中的使用案例一</title>
+	<!-- 引入vue -->
+	<script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+	<!-- 引入element-ui样式 -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<!-- 引入element-ui组件库 -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+	<div id="app" style="width: 20%">
+		<!-- 条件限制：只有当用户登录，才能发表评论，否则，评论按钮变为灰色 -->
+		<!-- v-if -->
+		<el-input
+			v-if="token"
+			type="textarea"
+			placeholder="请输入评论内容"
+			v-model="textarea">
+		</el-input>
+		<el-input
+			v-else
+			type="textarea"
+			placeholder="未登录"
+			v-model="textarea">
+		</el-input>
+
+		<el-button type="primary" v-if="token">评论</el-button>
+		<el-button type="primary" v-else style="background-color: #ccc;">评论</el-button>
+	</div>
+	<script>
+		new Vue({
+			el:'#app',
+			data(){
+				return {
+					textarea:'',
+					// 模拟用户登录后获取的token
+					token:'xxx'
+				}
+			},
+			methods:{
+				
+			}
+		})
+	</script>
+</body>
+</html>
