@@ -1,0 +1,188 @@
+复习
+	1、Element类型
+		--->标签 div、span、h1~h5...
+		属性
+			id
+			name
+			href
+			src
+			alt
+			style
+				只能获取到标签的行内样式
+			innerHTML
+				获取或设置一个元素内的html内容，包括行换
+			innerText
+				获取或设置一个元素内的文本内容
+		方法
+			getAttribute(属性名)
+				返回一个指定的属性名
+			setAttribute(属性名，属性值)
+				把指定的属性设置给指定属性名，该方法没有返回值
+			querySelector(选择器)
+				返回文中匹配该选择器的第一个元素
+			querySelectorAll(选择器)
+				返回文中匹配该选择器的所有元素
+
+	2、节点操作
+		1) 创建节点
+			document.createElement('标签名')
+
+			document.createElement('div')
+			document.createElement('span')
+
+		2) 追加节点
+			1. parent.appendChild(newChild)
+				在parent的最后追加一个newChild节点，newChild可以是新创建的节点，也可以是原本已存在的节点
+			2. insertBefore(newChild,item1)
+				newChild是需要追加的节点
+				item1是需要插入的位置
+
+		3) 删除节点
+			removeChild(节点)
+				parent.removeChild(item1)
+
+		4) 复制节点(克隆)
+			1. 浅复制
+				cloneNode() / cloneNode(false)
+				只复制标签，并不复制内容
+			2. 深复制
+				cloneNode(true)
+				既复制标签，也复制内容
+
+	3、事件
+		1) 事件三要素
+			1. 事件目标
+			2. 事件处理函数
+			3. 事件对象
+		2) 事件流(事件接收的顺序)
+			前提：
+				1、元素嵌套
+				2、每个元素上面都需要绑定事件
+
+			1. 事件冒泡(从内往外)
+				stopPropagation() 阻止事件默认
+				event.target	当前点击的事件对象
+			2. 事件捕获(从外往内)
+				语法：
+					outer.addEventListener('click',function(){},true)
+				参数：
+					1、 事件类型
+					2、 事件处理函数
+					3、 布尔值	
+						true  -->  事件捕获
+						false -->  事件冒泡
+		3) 事件绑定方式
+			*1. onxxx
+				onclick onmouseover onfocus...
+			2. addEventListener
+
+			3. attachEvent
+
+学习
+
+		4) 事件类型
+			click	鼠标点击
+
+			scroll	页面滚动
+
+			keyup	键盘抬起
+			keydown	键盘落下
+
+			focus	聚焦
+			blur	失焦
+
+			mouseover	光标移到元素，支持子元素
+			mouseout	光标移出元素，支持子元素
+
+			mouseenter 	光标移到元素，不支持子元素
+			mouseleave	光标移出元素，不支持子元素
+
+			onload
+				window.onload
+
+		5) 事件代理
+			用法：	
+				将事件绑定在当前元素的父元素上而非当前元素，这时候，当点击当前元素的时候，执行父元素上绑定的事件处理函数
+			好处：
+				父元素代理子元素所有的事件，子元素可以动态的添加和删除而不用频繁的绑定事件
+
+	4、BOM(浏览器对象模型)
+		使用JavaScript来访问和控制浏览器对象
+
+		1) 超时调用
+			含义：
+				在指定的毫秒数后调用函数
+			语法：
+				setTimeout(function(){},time)
+			参数：
+				第一个参数是 		要执行的代码
+				第二个参数是 		以毫秒表示的时间
+					1000毫秒 = 1秒
+			返回值：
+				返回一个ID(数字)，可以将这个ID传递给clearTimeout()来取消执行
+				var id = setTimeout(function(){},time)
+			清除：
+				clearTimeout(id)
+
+		2) 间歇调用
+			含义：
+				按照指定的周期(以毫秒计数)来调用函数，该方法会不停的被调用，直到该窗口被关闭或clearInterval被调用
+			语法：
+				setInterval(function(){},time)
+			参数：
+				第一个参数是 		要执行的代码
+				第二个参数是 		以毫秒表示的时间
+					1000毫秒 = 1秒
+			返回值：
+				返回一个ID(数字)，可以将这个ID传递给clearInterval()来取消执行
+				var id = setInterval(function(){},time)
+			清除：
+				clearInterval(id)
+
+			案例一：点名
+			案例二：根据栏目名查询信息
+
+		3) 系统对话框
+			alert()	
+				警告框，会阻塞代码的运行，该方法接受一个字符串，显示给用户
+			confirm()
+				确认对话框
+
+		4) Location对象
+			包含有关当前URL的信息
+			1. 属性
+				host
+					返回一个URL的主机名和端口
+				href
+					返回完整的URL
+				port
+					返回一个端口号
+			2. 方法
+				assign(url)
+					会载入一个新的url，并在浏览记录中生成一个新的记录(可以回退)
+				replace(url)
+					会载入一个新的url，不会在浏览记录中生成一个新的记录(不可以回退)
+				reload()
+					重新加载当前页面(刷新)
+
+		*5) 存储对象
+			浏览器提供了sessionStorage(会话存储)和localStorage(本地存储)来对网页的数据进行添加、删除、查询操作
+
+			localStorage
+				用于长久的保存整个网站的数据，保存的数据没有过期时间，除非手动去除
+			sessionStorage
+				临时保存同一窗口的数据，在窗口关闭或浏览器关闭的时候会删除这些数据
+
+			方法：(键值对)
+				getItem(key)
+					返回指定键的值
+				setItem(key,value)
+					添加键和值
+				removeItem(key)
+					删除指定键
+				clear()
+					清除所有的键
+　　　案例：登录
+　　　用户发起登录请求 -> 账号密码正确时返回token令牌 -> 用户将后台返回的token存储到浏览器中 -> 根据token查询用户基本信息 -> 将查询到的基本信息存储到浏览器 -> 根据id查询用户详细信息
+
+					有缘再见！

@@ -1,0 +1,72 @@
+0、如何实现鼠标点击当前的li，给它添加背景色，其他li没有背景色？
+    siblings()
+    含义：
+        返回被选元素的所有同级元素(同级元素是指共享相同父元素的元素)
+    语法：
+        $A.siblings() 选中所有与A同级的元素
+
+1、如何实现查询文章，并且显示到页面？
+    1) 底层ajax
+        $.ajax({
+            //请求后台的地址
+            url:'',
+            //请求方式 get post put ...
+            method:'get',
+            //携带的数据，传递给后台的数据
+            data:{},
+            //请求成功的回调函数
+            success:function(res){},
+            //请求失败的回调函数
+            error:function(err){}
+        })
+
+        1、没有参数
+            $.ajax({
+                url:'http://47.106.244.1:8099/manager/category/findAllCategory',
+                method:'get',
+                data:{},
+                success:function(res){
+                    console.log(res.data)
+                }
+            })
+
+        2、需要前端传递数据
+            $.ajax({
+                url:'http://47.106.244.1:8099/manager/article/findArticle',
+                method:'get',
+                data:{
+                    page:0,
+                    pageSize:10,
+                },
+                success:function(res){
+                    console.log(res.data.list)
+                }
+            })
+
+    2) 简化ajax
+        $.get(url,data,function(){});
+        $.post(url,data,function(){});
+    
+2、如何实现点击左侧导航栏，实现右侧切换对应的页面？
+    load()
+    问题：
+        再浏览器打开时，无法切换，并且保存跨域，是由于浏览器对静态页面有限制
+    解决：
+        方法一：将项目部署到阿里云服务器上
+        方法二：vscode编辑器下载插件 live server ，下载完成后，关闭vscode后重新打开，右击open with live server
+
+
+            
+
+
+
+            
+            
+
+
+
+            
+
+
+
+

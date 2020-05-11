@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>间歇调用</title>
+	<script>
+		var id = setInterval(function(){
+			console.log(1)
+		},1000)
+		setTimeout(function(){
+			clearInterval(id)
+		},3000)
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

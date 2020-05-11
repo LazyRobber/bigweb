@@ -1,0 +1,57 @@
+1、html5API
+    属于html5，使用js实现
+
+    1) 音/视频
+        HTML5 DOM为 video、audio 元素提供了方法、属性以及事件
+
+        方法
+            play()      开始播放音/视频
+            pause()     暂停当前的音/视频
+            load()      重新加载音/视频
+        属性
+            autoplay    设置在在加载完毕后是否立即播放音/视频
+                true  立即播放
+                false 不播放【默认】
+
+            controls    设置音/视频是否显示控件(比如播放/暂停等)
+                标准的音视频控件包括：
+                    播放
+                    暂停
+                    进度条
+                    音量
+                    全屏切换（供视频）
+                    字幕（当可用时）
+                    轨道（当可用时）
+            
+            currentTime   返回音/视频当前播放的位置（以秒计）
+
+            volume        返回音/视频的当前音量（取值为0~1）
+                1.0     最高音量【默认】
+                ...
+                0.0     静音
+            
+            playbackRate 返回音/视频的当前播放速度
+                1.0     正常速度【默认】
+                0.5     半速
+                2.0     倍速
+            
+            duration     返回音/视频的总长度（以秒计）
+
+            paused       返回视频是否暂停，如果是，返回true，否则返回false
+    
+    2) 画布 (vscode下载提示插件 canvas-snippets )
+        HTML5的canvas标签用于绘制图像(通过脚本，通常是JavaScript)，但是，canvas元素本身没有绘制能力(它仅仅是图形的容器)，
+        必须使用脚本来完成实际的绘制任务
+    
+        1. 绘制矩形的步骤
+            1、 取得canvas对象
+            2、 取得2d上下文对象(context)
+            3、 设定绘图样式
+                fillStyle   填充样式
+                strokeStyle 边框样式
+            4、 指定线宽
+                使用图形上下文对象中的lineWidth
+            5、 绘制矩形
+                fillRect(x,y,width,height)   填充矩形
+                    参数：起点x坐标，y坐标，宽、高
+                strokeRect() 边框矩形

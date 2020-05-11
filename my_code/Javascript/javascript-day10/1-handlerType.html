@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件类型</title>
+	<script>
+		window.onload = function(){
+			var input = document.getElementsByTagName('input')[0]
+			// 键盘落下
+			// input.onkeydown = function(){
+			// 	console.log(event)
+			// }
+			// 键盘抬起
+			// input.onkeyup = function(){
+			// 	// 当用户敲下回车的时候触发
+			// 	if(event.keyCode == 13){
+			// 		alert('请输入正确的用户名和密码')
+			// 	}
+			// }
+
+			// 聚焦
+			input.onfocus = function(){
+				console.log(event)
+			}
+			// 失焦
+			input.onblur = function(){
+				console.log(event)
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<input type="text">
+</body>
+</html>

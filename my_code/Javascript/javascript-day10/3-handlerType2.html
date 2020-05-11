@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件代理</title>
+	<style>
+		* {
+			list-style: none;
+		}
+		ul {
+			border:1px solid #333;
+			/*清除浮动*/
+			overflow: hidden;
+		}
+		ul li {
+			height: 100px;
+			width: 100px;
+			border:1px solid #333;
+			float: left;
+			margin:50px;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var ul = document.getElementsByTagName('ul')[0];
+			var button = document.getElementsByTagName('button')[0];
+
+			ul.onmouseover = function(){
+				// 获取标签名
+				// console.log(event.target.nodeName)
+				if(event.target.nodeName == 'LI'){
+					event.target.style.background = 'red'
+				}
+			}
+			ul.onmouseout = function(){
+				// 获取标签名
+				// console.log(event.target.nodeName)
+				if(event.target.nodeName == 'LI'){
+					event.target.style.background = 'none'
+				}
+			}
+
+			button.onclick = function(){
+				// 新创建一个li
+				var newLi = document.createElement('li')
+				// 追加到ul后
+				ul.appendChild(newLi)
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<!-- 需求一：实现光标移入到每个li上时，给当前的li添加背景色，其他li没有背景色 -->
+	<!-- 需求二：给ul新添加li的情况下，新增的li也要有如上功能 -->
+	<button>新增li</button>
+	<ul>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>超时调用用接口</title>
+	<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
+	<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		
+	</div>
+	<script>
+		new Vue({
+			el:'#app',
+			data(){
+				return {
+					list:[]
+				}
+			},
+			created(){
+				// dispatch()
+				this.findAll()
+				setTimeout(()=>{
+					this.findByName()
+				},1000)
+			},
+			methods:{
+				findAll(){
+					axios.get('http://47.106.244.1:8099/manager/category/findAllCategory').then((res)=>{
+						// 将查询到的所有栏目放到list中
+						this.list = res.data.data
+					})
+				},
+				findByName(){
+					var name = this.list[0].name
+					console.log(name)
+					axios.get('http://47.106.244.1:8099/manager/category/findCategoryByCategoryname?name='+name).then((res)=>{
+						console.log(res.data.data)
+					})
+				}
+			}
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登录</title>
+	<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
+	<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		用户名：<input type="text" v-model="form.username">
+		密码：<input type="text" v-model="form.password">
+		<button @click="toLogin">登录</button>
+		<button @click="findDetail">根据token获取用户信息</button>
+		<button @click="findUserAll">查询用户详细信息</button>
+	</div>
+	<script>
+		new Vue({
+			el:'#app',
+			data(){
+				return {
+					form:{}
+				}
+			},
+			created(){
+				
+			},
+			methods:{
+				// 登录请求
+				toLogin(){
+					axios.post('http://47.106.244.1:8099/manager/user/login',this.form).then((res)=>{
+						// console.log(res.data.data.token)
+						localStorage.setItem('token',res.data.data.token)
+					})
+				},
+				// 查询用户基本信息
+				findDetail(){
+					var token = localStorage.getItem('token')
+					axios.get('http://47.106.244.1:8099/manager/user/info?token='+token).then((res)=>{
+						console.log(res.data.data)
+						// 将用户信息存储到浏览器
+						localStorage.setItem('userInfo',JSON.stringify(res.data.data))
+					})
+				},
+				// 查询用户详细信息
+				findUserAll(){
+					// 获取浏览存储中的用户信息
+					var userInfo = localStorage.getItem('userInfo')
+					console.log(JSON.parse(userInfo).id)
+				}
+			}
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>超时调用</title>
+	<script>
+		var id1 = setTimeout(function(){
+			console.log('你好1')
+		},2000)
+		var id2 = setTimeout(function(){
+			console.log('你好2')
+		},2000)
+		console.log(id1,'id1')
+		console.log(id2,'id2')
+		clearTimeout(id1)
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

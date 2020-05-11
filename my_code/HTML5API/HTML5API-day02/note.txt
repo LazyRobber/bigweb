@@ -1,0 +1,214 @@
+复习
+    1、siblings() -> 点击切换背景色
+    2、ajax
+        $.ajax({
+            url:'',
+            method:'',
+            data:{},
+            success:function(res){},
+            error:function(err){}
+        })
+
+        $.get(url,data,function(){},function(){})
+    
+    3、生成节点并追加
+        数据遍历时
+            var newDiv = $(`<div>`+item.id+`</div>`)
+            $('tbody').append(newDiv)
+    
+    4、点击左侧切换右侧的页面
+        load()
+        跨域拦截
+            1) 下载插件 live server 
+            2) 将项目部署到阿里云/腾讯云
+
+    5、音视频
+        方法
+            play()
+            pause()
+            load()
+        属性
+            autoplay
+            controls
+            currentTime
+            volume
+            playbackRate
+            duration
+
+        event.keyCode 37 38 39 40 (左、上、右、下)
+    
+    6、画布
+        1) 矩形绘制步骤
+            1. 取得canvas对象
+            2. 取得2d上下文context
+            3. 设定绘图样式
+                fillStyle   填充
+                strokeStyle 描边
+            4. 设置线宽
+                context.lineWidth
+            5. 绘制矩形
+                fillRect()   填充矩形
+                strokeRect() 描边矩形
+
+学习    
+        2) 圆形绘制步骤
+            1. 取得canvas对象
+            2. 取得2d上下文context
+            3. 设定绘图样式
+                fillStyle   填充
+                strokeStyle 描边
+            4. 指定线宽
+                context.lineWidth
+            5. 开始创建路径
+                context.beginPath()
+            6. 设置路径
+                context.arc(x, y, radius, Math.PI / 180 * startAngle, Math.PI / 180 * endAngle, anticlockwise);
+                参数：  圆心x坐标，y坐标，半径，开始角度，结束角度，绘制方向(false时为逆时针，true为顺时针【默认值】)
+                    Math.PI 是180度
+                    角度弧度的计算  Math.PI / 180 * startAngle
+
+            7. 关闭路径
+                context.closePath()
+            8. 设定绘制样式，进行图像绘制
+                fill()   填充圆
+                stroke() 描边圆
+            
+            如果需要绘制多个圆形的时候，可以将5、6、7、8这几步，封装成一个函数，之后调用该该函即可
+
+        3) 绘制渐变
+            绘制线性渐变时，需要使用LinearGradient对象，通过2d上下文来创建和修改
+            1. 获取canvas对象
+            2. 获取2d上下文
+            3. 创建渐变对象
+                var gradient = context.createLinearGradient(x1, y1, x2, y2);
+                参数：
+                    起始点的x坐标，y坐标，结束点的x坐标，y坐标
+            4. 添加渐变颜色
+                gradient.addColorStop(number,'color');
+                参数：
+                    number表示0-1之间的偏移量
+                    color 颜色值
+
+                注意：
+                    添加渐变颜色的时候，需要添加至少两个颜色才会有渐变的效果
+
+            5. 设置填充渐变
+                context.fillStyle = gradient;
+            6. 使用渐变绘制矩形
+                context.fillRect(x,y,width,height);
+
+        4) 绘制变形(需要绘制图形之前进行变形操作)
+            1. 平移坐标轴
+                context.translate(x,y)
+                参数：
+                    坐标原点在x轴方向上移动的单位,坐标原点在y轴方向上移动的单位
+
+            2. 放大缩小坐标轴
+                context.scale(x,y)
+                参数：
+                    水平方向上的放大倍数，垂直方向上的放大倍数
+                如果需要缩小，将这两个参数设置为0~1之间的小数即可
+
+            3. 旋转坐标轴
+                context.rotate(angle)
+                参数：
+                    需要旋转的弧度
+                注意：
+                    旋转的中心点是坐标轴的原点，旋转的方向是以顺时针方向进行的，如果需要逆时针旋转，将参数设置为负数即可
+
+        5) 绘制图像
+            在HTML5中，不仅可以通过HTML5 API绘制图形，还可以读取磁盘中或网络中的图片，将图片绘制到画布中
+
+            1. 创建图像对象
+                var image = new Image();
+                image.src = './xx.jpg'
+            2. 绘制图像
+                context.drawImage(image,x,y);
+                参数：
+                    图片对象，绘制位置的起始x坐标，绘制位置的起始y坐标
+                context.drawImage(image,x,y,w,h);
+                参数：
+                    图片对象，绘制位置的起始x坐标，绘制位置的起始y坐标，绘制图像的宽，高
+            
+            注意：
+                在绘制图片时，需要在图片加载完毕之后，也就是使用image.onload = function(){}
+            
+            3. 图片平铺
+                createPattern(image,type)
+                参数：(第二个参数不可以省略)
+                    image对象，平铺类型
+                    平铺类型分为如下几种：
+                        no-repeat   不平铺
+                        repeat-x    横向平铺
+                        repeat-y    纵向平铺
+                        repeat      全方向平铺
+
+        6) 绘制文本
+            在HTML5API中，可以在canvas画布中进行文字的绘制，同时也可以对绘制的文字进行样式的设置(大小、对齐方式等)
+
+            font      设置文本字体
+                context.font = '10px sans-serif';
+            textAlign 文本对齐方式
+                context.textAlign = 'start | left | center | right |end';
+
+            fillText(text,x,y,width) 使用fillStyle属性绘制填充文本
+                context.fillText(text, x, y, maxWidth);
+            strokeText(text,x,y,width) 使用strokeStyle属性绘制描边文本
+
+    7、拖放API
+        拖放是一种常见的特性，即抓取一个对象以后拖动到另一个位置，它属于HTML5API的一部分，任何元素都可以拖放
+        
+        如果需要拖动某一个元素，需要先将该元素设置为可拖动
+            draggable   是否可拖动
+                true  可以拖动
+                false 不可以拖动
+
+        1) 拖动元素
+            需要移动位置的元素
+            dragstart   开始拖动
+            drag        正在拖动
+            dragend     结束拖动
+
+        2) 目标元素
+            需要放置的地点
+            dragenter   拖动元素进入到目标元素
+            dragover    拖动元素在目标元素中移动
+            drop        拖动元素放置到了目标元素中
+        
+        3) 拖放流程
+            dragstart -> drag -> dragenter -> dragover -> drop -> dragend
+        
+        思考：如何实现将四个div拖放到一个指定的容器中？
+
+        注意：
+            有些元素不允许被放置元素，所以此时需要将该元素设置为有效的目标元素(也就说可以被放置其他元素)
+
+            方法：
+                重写目标元素中的dragover事件，阻止默认行为即可
+
+                parent.ondragover = function(){
+                    event.preventDefault();
+                }
+
+        思考：现在虽然实现了拖动元素可拖动，目标元素可放置，但是如何实现将拖动元素放置到目标元素中？
+            拖动时，需要知道被拖动的元素是谁？
+            ->
+            可以根据id、class等方式获取到元素
+            ->
+            如何获取到id、class？ 
+            ->
+            dataTransfer对象
+
+                方法：
+                    event.dataTransfer.setData(key,value)   设置值，在dragstart时使用
+                    event.dataTransfer.getData(key)         获取值，在drop时使用
+                    clearData()     删除所有的数据，在dragstart时使用
+
+        实现元素拖动到任意位置
+
+        设置拖放时的视觉效果
+            effectAllowed   在dragstart使用
+            dropEffect      在dragover使用
+            取值： link、copy、move
+
+看点资讯项目

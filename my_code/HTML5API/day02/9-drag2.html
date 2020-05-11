@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拖放api</title>
+  <script>
+    window.onload = function () {
+      // 选中目标元素
+      var body = document.body;
+      var parents = document.getElementsByClassName('parent')[0];
+      parents = [...parents];
+      parents.push(body);
+      // 选中拖动元素
+      var childs = document.getElementsByClassName('child');
+      childs = [...childs];
+
+      childs.forEach(item => {
+        item.ondragstart = myDragStart;
+      });
+      childs.forEach(item => {
+        item.ondragover = myDragOver;
+        item.ondrop = myDrop;
+      });
+
+      // 声明事件处理函数
+      function myDragStart(event) {
+
+      }
+      function myDragOver() {
+
+      }
+
+    }
+  </script>
+</head>
+
+<body>
+  <!-- 目标元素 -->
+  <div class="parent"></div>
+  <div class="parent"></div>
+  <!-- 拖动元素 -->
+  <div class="child" id="one" draggable="true">1</div>
+  <div class="child" id="two" draggable="true">2</div>
+  <div class="child" id="three" draggable="true">3</div>
+  <div class="child" id="four" draggable="true">4</div>
+</body>
+<style>
+  .parent {
+    border: 1px solid #333;
+    height: 200px;
+    margin: 10px;
+  }
+
+  .child {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #333;
+    float: left;
+    margin: 10px;
+  }
+</style>
+
+</html>
